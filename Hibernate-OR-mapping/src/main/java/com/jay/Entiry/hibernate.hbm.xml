@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+  <class name = "com.jay.Entiry.Students" table = "students">
+      
+      <meta attribute = "class-description">
+         This class contains the employee detail. 
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <!--One To Many Mapping -->
+       <set name = "certificate" cascade="all">
+         <key column = "student_id"/>
+         <one-to-many class="com.jay.Entiry.Certificate"/>
+       </set>
+      
+      <!--Many To Many Mapping -->
+      <!--One one work at a time either one to many or many to many because here i have mapped save entity for both ,remove one and run -->
+      <set name = "certificate" cascade="save-update" table="EMP_CERT">
+         <key column = "student_id"/>
+         <many-to-many column = "certificate_id" class="com.jay.Entiry.Certificate"/>
+      </set>
+      
+      
+      <property name = "first_name" column = "first_name" type = "string"/>
+      <property name = "last_name" column = "last_name" type = "string"/>
+      <property name = "fee" column = "fee" type = "int"/>
+      
+      <!--Many to one Mapping -->
+      <many-to-one name = "addressid" column = "addressid" 
+         class="com.jay.Entiry.Address" not-null="true"/>
+         
+      <!--one to one beause we have maked unique true no dublicate value is allowed-->
+      <many-to-one name = "studentlogin" column = "studentloginid" 
+         class="com.jay.Entiry.Studentlogin" not-null="true" unique="true"/>
+         
+   </class>
+
+   <class name = "com.jay.Entiry.Address" table="address">
+      
+      <meta attribute = "class-description">
+         This class contains the address detail. 
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "street_name" column = "street_name" type = "string"/>
+      <property name = "city_name" column = "city_name" type = "string"/>
+      <property name = "state_name" column = "state_name" type = "string"/>
+      <property name = "zipcode" column = "zipcode" type = "string"/>
+      
+   </class>
+   <class name = "com.jay.Entiry.Studentlogin" table="studentlogin">
+      
+      <meta attribute = "class-description">
+         This class contains the address detail. 
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "susername" column = "susername" type = "string"/>
+      <property name = "spassword" column = "spassword" type = "string"/>
+ 
+      
+   </class>
+   
+   <class name = "com.jay.Entiry.Certificate" table = "certificate">
+      
+      <meta attribute = "class-description">
+         This class contains the certificate records. 
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "name" column = "certificate_name" type = "string"/>
+      
+   </class>
+   
+   
+</hibernate-mapping>
